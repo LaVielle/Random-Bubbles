@@ -1,3 +1,8 @@
+/*
+*	Use the following command in Terminal to allow cross origin policy override in Chorme:
+*	/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir="/tmp/chrome_dev_session" --disable-web-security
+*/
+
 var dataArray = []
 
 function bub(ident, valeur){
@@ -91,14 +96,21 @@ d3.csv('rand_data.csv', function(error, data) {
 		.data(nodes)
 		.enter();
 
+	var rScale = d3.scale.linear()
+		.domain([d3.min(data, function(d) {return dataArray.val;})*0.75, d3.max(data, function(d) {return dataArray.val;})])
+		//Change 400 here
+		.range([0, 400])
+
+console.log([d3.min(data, function(d) {return d.val;})*0.75, d3.max(data, function(d) {return d.val;})])
+
 	//Creating bubbles
 	bubbles.append('circle')
-		.attr('r', function(d){return d.r;})
-		.attr('cx', function(d){return d.x;})
-		.attr('cy', function(d){return d.y;})
+		.attr('r', function(d){return d.rScale;})
+		.attr('cx', function(d){return 10;})
+		.attr('cy', function(d){return 20;})
 		//Check color function, maybe data input wrong
-		.style('fill', function(d){return color(d.value);})
-
+		//.style('fill', function(d){return color(d.value);})
+		.style('fill', "#fff")
 
 });
 
